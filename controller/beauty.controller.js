@@ -4,7 +4,7 @@ const getBeautyProducts = async (req,res)=>{
     // http://localhost:8080/beauty/?page=1&limit=10&sort=price,desc
     try {
 		const page = parseInt(req.query.page) - 1 || 0;
-		const limit = parseInt(req.query.limit) || 5;
+		const limit = parseInt(req.query.limit) || 16;
 		const search = req.query.search || "";
 		let sort = req.query.sort || "productName";
 		
