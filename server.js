@@ -1,7 +1,7 @@
 const express = require('express');
 
 const {connection} = require("./config/db");
-
+const cors = require("cors")
 const app = express();
 
 require("dotenv").config();
@@ -13,6 +13,7 @@ const {ShoesAndBagsRouter} = require("./Routes/shoes&bags.router")
 const {menRouter} = require("./Routes/mens.router")
 
 let PORT = process.env.PORT || 8500;
+app.use(cors());
 app.use(express.json());
 
 // require("dotenv").config();
