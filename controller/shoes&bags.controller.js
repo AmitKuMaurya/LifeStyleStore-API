@@ -4,7 +4,7 @@ const getShoesAndBagsProducts = async (req,res)=>{
     // http://localhost:8080/ShoesAndBags/?page=1&limit=10&sort=price,desc
     try {
 		const page = parseInt(req.query.page) - 1 || 0;
-		const limit = parseInt(req.query.limit) || 16;
+		const limit = parseInt(req.query.limit) || 5;
 		const search = req.query.search || "";
 		let sort = req.query.sort || "productName";
 		
@@ -62,5 +62,29 @@ const postShoesAndBagsProducts = async (req,res) =>{
     }
     // res.send(post_res);
 }
+    // added edit route or delete controller in Shoe&Bags api 
 
-module.exports = {getShoesAndBagsProducts,getShoesAndBagsProductById,postShoesAndBagsProducts}
+
+const patchShoesAndBagsProducts = async (req, res) => {
+    const {productId} = req.params
+    const deletedNote = await TodoModel.findOneAndDelete({_id : productId, userId : req.body.userId})
+    if(deletedNote){
+        res.status(200).send("Deleted")
+    }
+    else{
+        res.send("couldn't delete")
+    }
+}
+
+const deleteShoesAndBagsProducts = async (req, res) => {
+    const {productId} = req.params
+    const deletedNote = await TodoModel.findOneAndUpdate({_id : productId, userId : req.body.userId},req.body)
+    if(deletedNote){
+        res.send("Deleted")
+    }
+    else{
+        res.send("couldn't delete")
+    }
+}
+
+module.exports = {getShoesAndBagsProducts,getShoesAndBagsProductById,postShoesAndBagsProducts,patchShoesAndBagsProducts,deleteShoesAndBagsProducts}

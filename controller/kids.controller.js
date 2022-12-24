@@ -4,7 +4,7 @@ const getKidProducts = async (req,res)=>{
     // http://localhost:8080/kid/?page=1&limit=10&sort=price,desc
     try {
 		const page = parseInt(req.query.page) - 1 || 0;
-		const limit = parseInt(req.query.limit) || 16;
+		const limit = parseInt(req.query.limit) || 5;
 		const search = req.query.search || "";
 		let sort = req.query.sort || "productName";
 		
@@ -64,4 +64,29 @@ const postKidProducts = async (req,res) =>{
     // res.send(post_res);
 }
 
-module.exports = {getKidProducts,getKidProductById,postKidProducts}
+    // added edit route or delete controller in kids api 
+
+
+const patchKidProducts = async (req, res) => {
+    const {productId} = req.params
+    const deletedNote = await TodoModel.findOneAndDelete({_id : productId, userId : req.body.userId})
+    if(deletedNote){
+        res.status(200).send("Deleted")
+    }
+    else{
+        res.send("couldn't delete")
+    }
+}
+
+const deleteKidProducts = async (req, res) => {
+    const {productId} = req.params
+    const deletedNote = await TodoModel.findOneAndUpdate({_id : productId, userId : req.body.userId},req.body)
+    if(deletedNote){
+        res.send("Deleted");
+    }
+    else{
+        res.send("couldn't delete")
+    }
+}
+
+module.exports = {getKidProducts,getKidProductById,postKidProducts,patchKidProducts,deleteKidProducts}
