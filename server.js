@@ -40,7 +40,6 @@ app.use("/ShoesAndBags",ShoesAndBagsRouter);
 
 app.use("/mens",menRouter);
 
-app.use(errMiddleware());
 
 app.listen(PORT,async ()=>{
     try{
